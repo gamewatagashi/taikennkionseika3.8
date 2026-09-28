@@ -256,7 +256,7 @@
     <details id="advDetails">
       <summary>読み上げ設定（Scene / Sample Context / 話し方の指定）を編集する</summary>
       <div class="hint" id="modelSettingHint">3.1系ではScene・話し方の指定・文字数制限を使用します。3.8系ではこれらを送信せず、専用のTTS形式を使用します。</div>
-      <div id="gemini38TtsNote" style="display:none;font-size:12px;color:var(--text-dim);margin:8px 0 10px;padding:9px 10px;border:1px solid var(--border-soft);border-radius:6px;background:var(--surface-2);">3.8系は本文をそのまま音声化します。voice style は <b>Narration</b> に固定。既存の先生名の読み変換と「（笑）」の除去だけは音声化時に維持します。</div>
+      <div id="gemini38TtsNote" style="display:none;font-size:12px;color:var(--text-dim);margin:8px 0 10px;padding:9px 10px;border:1px solid var(--border-soft);border-radius:6px;background:var(--surface-2);">3.8系は本文をそのまま音声化します。voice style は <b>Narration</b> に固定し、さらに「ハキハキ・明瞭・聞き取りやすい・一定の音量・ややテンポよく」という読み上げスタイルを自動適用します。既存の先生名の読み変換と「（笑）」の除去は音声化時に維持します。</div>
       <div id="legacyTtsSettings">
       <label for="tplScene">Scene</label>
       <textarea id="tplScene" rows="2"></textarea>
@@ -1102,7 +1102,7 @@ function normalizePronunciationText(text){
     // また、3.8系のunary応答は標準WAVなので、PCMとして再ラップしない。
     const is38=isGemini38Model(model);
     const part=is38
-      ? {text:text, speech_metadata:{style:"Narration"}}
+      ? {text:text, speech_metadata:{style:"Narration. Clear, crisp, articulate Japanese narration with a bright, energetic and confident delivery. Keep the volume and vocal energy consistent from beginning to end. Use a moderately brisk pace and very clear articulation. Do not mumble, whisper, speak too softly, or add audible breaths or sighs."}}
       : {text:text};
 
     const generationConfig={
